@@ -4,14 +4,14 @@ const registry = require('./registry');
 const { ensureTool } = require('./tool_installer');
 
 // Tcpdump - Packet capture
-registry.register('tcpdump_capture', async ({ interface, output, filter }) => {
+registry.register('tcpdump_capture', async ({ iface, output, filter }) => {
   await ensureTool('tcpdump', 'tcpdump', 'pkg');
   const out = output || 'capture.pcap';
   const filt = filter ? `"${filter}"` : '';
   try {
-    return execSync(`tcpdump -i ${interface || 'wlan0'} -w ${out} ${filt} -c 100`).toString();
+    return execSync(`tcpdump -i ${iface || 'wlan0'} -w ${out} ${filt} -c 100`).toString();
   } catch (e) { return `Tcpdump error: ${e.message}`; }
-}, 'capture packets. args: interface, output, filter (optional)');
+}, 'capture packets. args: iface, output, filter (optional)');
 
 // File recovery (foremost)
 registry.register('file_carve', async ({ input, outputDir }) => {
