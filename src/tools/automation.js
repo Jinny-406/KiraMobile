@@ -66,7 +66,7 @@ registry.register('report_generate', async ({ inputDir, outputFile }) => {
 registry.register('scan_schedule', async ({ target, interval }) => {
   const minutes = interval || 60;
   try {
-    const cronCmd = `echo "${minutes} * * * * cd ${process.cwd()} && node -e \"require('./src/tools/registry').execute('nmap_scan', { target: '${target}' })\" >> scan.log`;`;
+    const cronCmd = `echo "${minutes} * * * * cd ${process.cwd()} && node -e \"require('./src/tools/registry').execute('nmap_scan', { target: '${target}' })\" >> scan.log"`;
     return `Scheduled scan every ${minutes} minutes.\nAdd to crontab: ${cronCmd}`;
   } catch (e) { return `Scheduling error: ${e.message}`; }
 }, 'schedule automated scan. args: target, interval minutes (optional)');
