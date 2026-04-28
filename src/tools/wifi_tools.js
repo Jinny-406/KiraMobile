@@ -3,19 +3,19 @@ const { execSync } = require('child_process');
 const registry = require('./registry');
 const { ensureTool } = require('./tool_installer');
 
-registry.register('airmon_start', async ({ interface }) => {
+registry.register('airmon_start', async ({ iface }) => {
   await ensureTool('airmon-ng', 'aircrack-ng', 'pkg');
   try {
-    return execSync(`airmon-ng start ${interface || 'wlan0'}`).toString();
+    return execSync(`airmon-ng start ${iface || 'wlan0'}`).toString();
   } catch (e) { return `Airmon error: ${e.message}`; }
-}, 'enable monitor mode. args: interface (optional, default: wlan0)');
+}, 'enable monitor mode. args: iface (optional, default: wlan0)');
 
-registry.register('airodump_scan', async ({ interface, output }) => {
+registry.register('airodump_scan', async ({ iface, output }) => {
   await ensureTool('airodump-ng', 'aircrack-ng', 'pkg');
   try {
-    return execSync(`airodump-ng ${interface || 'wlan0mon'} -w ${output || 'capture'}`).toString();
+    return execSync(`airodump-ng ${iface || 'wlan0mon'} -w ${output || 'capture'}`).toString();
   } catch (e) { return `Airodump error: ${e.message}`; }
-}, 'capture wifi handshakes. args: interface, output (optional)');
+}, 'capture wifi handshakes. args: iface, output (optional)');
 
 registry.register('aircrack_crack', async ({ capture, wordlist }) => {
   await ensureTool('aircrack-ng', 'aircrack-ng', 'pkg');
