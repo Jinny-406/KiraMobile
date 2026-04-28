@@ -25,6 +25,11 @@ fi
 echo -e "${GRN}[1/6]${RST} updating packages..."
 pkg update -y || echo "Package update failed, continuing..."
 
+echo -e "${GRN}[1.5/6]${RST} adding unstable repository..."
+pkg install -y root-repo 2>/dev/null || true
+pkg install -y unstable-repo 2>/dev/null || true
+pkg update -y || true
+
 echo -e "${GRN}[2/6]${RST} installing dependencies..."
 pkg install -y nodejs git curl wget unzip || {
   echo -e "${RED}Failed to install dependencies${RST}"
@@ -46,13 +51,17 @@ fi
 
 echo -e "${GRN}[4/6]${RST} installing node modules..."
 cd "$HOME/kira" || exit 1
-npm install 2>&1 || {
+export PUPPETEER_SKIP_DOWNLOAD=true
+npm install --no-optional 2>&1 || {
   echo -e "${YLW}Trying npm install with --force...${RST}"
-  npm install --force 2>&1 || echo -e "${RED}npm install failed - check errors above${RST}"
+  npm install --force --no-optional 2>&1 || echo -e "${RED}npm install failed - check errors above${RST}"
 }
 
 echo -e "${GRN}[5/6]${RST} installing hacker tools (optional)..."
-pkg install -y nmap hydra sqlmap nikto dirb sublist3r theharvester dnsrecon whois john aircrack-ng radare2 masscan amass searchsploit exploitdb steghide exiftool tcpdump foremost binwalk bettercap nuclei qrencode cewl crunch hashcat proot proot-distro gobuster feroxbuster rustscan dirsearch iftop nethogs htop bluez-utils seclists || echo "Some packages failed to install"
+pkg install -y nmap steghide exiftool binwalk qrencode crunch || echo "Some packages failed"
+
+# Try unstable repo for more tools
+pkg install -y -t unstable hydra sqlmap nikto dirb sublist3r theharvester dnsrecon whois john aircrack-ng radare2 masscan amass searchsploit exploitdb tcpdump foremost bettercap nuclei cewl hashcat proot proot-distro gobuster feroxbuster rustscan dirsearch iftop nethogs htop bluez-utils seclists 2>/dev/null || echo "Some unstable packages failed"
 
 # Install gems for zsteg
 gem install zsteg 2>/dev/null || echo "zsteg install skipped"
@@ -93,5 +102,5 @@ echo -e "  ${RED}tip:${RST} install Termux:API for full features"
 echo -e "  f-droid.org/en/packages/com.termux.api/"
 echo ""
 echo -e "  ${YLW}If 'kira' command not found, run:${RST}"
-echo -e "  ${YLW}export PATH=\\$HOME/.local/bin:\\$PATH${RST}"
+echo -e "  ${YLW}export PATH=\$HOME/.local/bin:\$PATH${RST}"
 echo ""
