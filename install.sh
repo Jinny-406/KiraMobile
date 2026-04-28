@@ -34,7 +34,7 @@ if [ -d "$HOME/kira" ]; then
   echo "  existing install found — pulling latest..."
   cd "$HOME/kira" && git pull -q
 else
-  git clone --depth=1 https://github.com/JinnyChandio/Kira2.git "$HOME/kira" -q
+  git clone --depth=1 https://github.com/Jinny-406/KiraMobile.git "$HOME/kira" -q
 fi
 
 echo -e "${GRN}[4/5]${RST} installing node modules..."
