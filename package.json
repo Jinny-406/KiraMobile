@@ -1,0 +1,24 @@
+{
+  "name": "kira",
+  "version": "0.1.0",
+  "description": "AGI-level AI agent for desktop & mobile",
+  "main": "src/index.js",
+  "bin": {
+    "kira": "./src/index.js"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "mcp": "node src/mcp/stdio.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/server-filesystem": "^2026.1.14",
+    "blessed": "^0.1.81",
+    "chalk": "^4.1.2",
+    "discord.js": "^14.26.0",
+    "nodemailer": "^8.0.6",
+    "qrcode-terminal": "^0.12.0",
+    "whatsapp-web.js": "^1.25.0"
+  },
+  "license": "MIT"
+}

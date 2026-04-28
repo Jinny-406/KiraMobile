@@ -1,0 +1,1 @@
+"const { Client, GatewayIntentBits } = require('discord.js'); const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.DirectMessages] }); client.login('MTQ4NjQxMjIwNTU3MzU0MjA1MA.Z????.????'); client.on('ready', () => { client.users.fetch('712647275788107857').then(u => u.send('kira here')).then(() => console.log('sent')).catch(() => {}) });"  
