@@ -9,7 +9,7 @@ const loop      = require('./core/loop');
 const tui       = require('./tui');
 const telegram  = require('./integrations/telegram');
 const discord   = require('./integrations/discord');
-const whatsapp  = require('./integrations/whatsapp');
+// const whatsapp  = require('./integrations/whatsapp');
 const { showHelp } = require('./tui/menu');
 const { createMenu, prompt } = require('./tui/menu');
 
@@ -690,7 +690,7 @@ async function main() {
   if (cfg.discordToken) {
     discord.start(msg => tui.addMessage('system', `discord: ${msg}`));
   }
-  whatsapp.start(msg => tui.addMessage('system', `whatsapp: ${msg}`));
+  // whatsapp.start(msg => tui.addMessage('system', `whatsapp: ${msg}`));
 }
 
 main();
